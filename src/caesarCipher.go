@@ -82,9 +82,9 @@ func decrypt(text string) (newt string) {
 	newText := ""
 	for i := 0; i < len(text); i++ {
 		if strings.Contains(lowerAlphabet, string(text[i])) {
-			newText += string(lowerAlphabet[((strings.Index(lowerAlphabet, string(text[i])))-4)%26])
+			newText += string(lowerAlphabet[((strings.Index(lowerAlphabet, string(text[i])))+22)%26])
 		} else if strings.Contains(upperAlphabet, string(text[i])) {
-			newText += string(upperAlphabet[((strings.Index(upperAlphabet, string(text[i])))-4)%26])
+			newText += string(upperAlphabet[((strings.Index(upperAlphabet, string(text[i])))+22)%26])
 		} else {
 			newText += string(text[i])
 		}

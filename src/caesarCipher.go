@@ -14,17 +14,41 @@ func CaesarCipher() {
 	menu()
 }
 func menu() {
-	choose := ""
+	reader := bufio.NewReader(os.Stdin)
+	for {
+		fmt.Print("e:Encrypt\nd:Decypt\nChoose(q for quit): ")
 
-	for (choose != "q") && (choose != "Q") {
-		fmt.Print("1-Encrypt\n2-Decrpyt\nChoose(e,d or q for quit):")
-		fmt.Scanln(&choose)
-		if (choose == "E") || (choose == "e") {
-			input := getMessage()
-			fmt.Println("Encrpyt Text:", encrypt(input))
-		} else if (choose == "D") || (choose == "d") {
-			input := getMessage()
-			fmt.Println("Decrpyt Text:", decrypt(input))
+		choice, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		choice = strings.TrimSpace(choice)
+		switch choice {
+		case "e", "E":
+			plaintext := getMessage()
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			plaintext = strings.TrimSpace(plaintext)
+			fmt.Println("Encypt:", encrypt(plaintext))
+
+		case "d", "D":
+			ciphertext := getMessage()
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			ciphertext = strings.TrimSpace(ciphertext)
+			fmt.Println("Decypt:", decrypt(ciphertext))
+
+		case "q", "Q":
+			fmt.Println("Exiting the program")
+			return
+
+		default:
+			fmt.Println("Wrong choise..")
 		}
 	}
 }
@@ -32,7 +56,7 @@ func menu() {
 // get message from input
 func getMessage() (x string) {
 	inputReader := bufio.NewReader(os.Stdin)
-	fmt.Printf("Get Message:")
+	fmt.Printf("Get Message: ")
 	input, _ := inputReader.ReadString('\n')
 	input = strings.TrimSuffix(input, "\n")
 	return input
